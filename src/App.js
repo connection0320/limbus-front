@@ -35,10 +35,18 @@ function App() {
   const [sinners, setSinners] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/sinners`)
-      .then((res) => res.json())
-      .then((data) => setSinners(data));
-  }, []);
+    const fetchSinners = async () => {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/sinners`);
+        const data = await res.json();
+        setSinners(data);
+      } catch (error) {
+        console.error("API 호출 실패:", error);
+      }
+    };
+
+  fetchSinners();
+}, []);
 
   return (
     <GlobalStyle>
